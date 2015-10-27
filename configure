@@ -1,0 +1,35 @@
+#!/bin/sh
+set -e
+
+trap "rm -f flock_check" EXIT
+(gcc stubgen/flock_check.c -o flock_check 2>/dev/null && ./flock_check) ||
+  (echo "Package needs flock headers to be installed on your system."; exit 1)
+
+oasis setup
+git update-index --assume-unchanged Makefile myocamlbuild.ml 2>/dev/null || true
+
+# OASIS_START
+# DO NOT EDIT (digest: dc86c2ad450f91ca10c931b6045d0499)
+set -e
+
+FST=true
+for i in "$@"; do
+  if $FST; then
+    set --
+    FST=false
+  fi
+
+  case $i in
+    --*=*)
+      ARG=${i%%=*}
+      VAL=${i##*=}
+      set -- "$@" "$ARG" "$VAL"
+      ;;
+    *)
+      set -- "$@" "$i"
+      ;;
+  esac
+done
+
+ocaml setup.ml -configure "$@"
+# OASIS_STOP

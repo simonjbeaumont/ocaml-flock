@@ -1,0 +1,56 @@
+OASISFormat:    0.4
+Name:           flock
+Version:        1.0.0
+Synopsis:       Ctypes bindings to flock for OCaml
+Authors:        Si Beaumont
+License:        LGPL-2.1 with OCaml linking exception
+Plugins:        DevFiles (0.4), META (0.4)
+BuildTools:     ocamlbuild
+
+Library flock
+  Path:             lib
+  FindlibName:      flock
+  Modules:          Flock
+  InternalModules:  Ffi_generated, Ffi_generated_types
+  CSources:         ffi_generated_stubs.c
+  CCOpt:            -I $pkg_ctypes_stubs
+  ByteOpt:          -warn-error +1..45
+  NativeOpt:        -warn-error +1..45
+  BuildDepends:     flock_bindings, ctypes.stubs
+
+Library flock_bindings
+  Install:          true
+  Path:             bindings
+  Modules:          Ffi_bindings
+  ByteOpt:          -warn-error +1..45
+  NativeOpt:        -warn-error +1..45
+  BuildDepends:     ctypes.stubs
+
+Executable ffi_stubgen
+  Install:        false
+  Path:           stubgen
+  MainIs:         ffi_stubgen.ml
+  ByteOpt:        -warn-error +1..45
+  NativeOpt:      -warn-error +1..45
+  BuildDepends:   flock_bindings
+
+Executable ffi_types_stubgen
+  Install:        false
+  Path:           stubgen
+  MainIs:         ffi_types_stubgen.ml
+  ByteOpt:        -warn-error +1..45
+  NativeOpt:      -warn-error +1..45
+  BuildDepends:   flock_bindings
+
+Executable test_flock
+  Build$:         flag(tests)
+  Install:        false
+  Path:           lib_test
+  MainIs:         test_flock.ml
+  CompiledObject: best
+  ByteOpt:        -warn-error +1..45
+  NativeOpt:      -warn-error +1..45
+  BuildDepends:   flock, oUnit
+
+Test test_flock
+  Command: $test_flock -runner sequential

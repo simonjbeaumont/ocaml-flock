@@ -1,0 +1,17 @@
+META
+_tags
+*.mldylib
+*.clib
+*.mllib
+*.mlpack
+*.odocl
+setup.ml
+setup.data
+setup.log
+
+_build/
+*.native
+*.byte
+
+travis-coveralls.sh
+.coverage/
