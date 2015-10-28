@@ -1,0 +1,2 @@
+file "lib/ffi_generated.ml" [ regexp ".*" ];
+file "lib/ffi_generated_types.ml" [ regexp ".*" ];
