@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="Up" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Flock" rel="Chapter" href="Flock.html"><link title="Basic types and values" rel="Section" href="#1_Basictypesandvalues">
+<link title="Errors" rel="Section" href="#1_Errors">
+<title>Flock</title>
+</head>
+<body>
+<div class="navbar">&nbsp;<a class="up" href="index.html" title="Index">Up</a>
+&nbsp;</div>
+<h1>Module <a href="type_Flock.html">Flock</a></h1>
+
+<pre><span class="keyword">module</span> Flock: <code class="code">sig</code> <a href="Flock.html">..</a> <code class="code">end</code></pre><div class="info module top">
+A wrapper library around type-safe Ctypes bindings to <code class="code">flock(2)</code>.
+<p>
+
+    See the man page for <a href="http://linux.die.net/man/2/flock">flock(2)</a>.<br>
+</div>
+<hr width="100%">
+<br>
+<h1 id="1_Basictypesandvalues">Basic types and values</h1><br>
+
+<pre><code><span id="TYPElock_operation"><span class="keyword">type</span> <code class="type"></code>lock_operation</span> = </code></pre><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTlock_operation.LOCK_SH"><span class="constructor">LOCK_SH</span></span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTlock_operation.LOCK_EX"><span class="constructor">LOCK_EX</span></span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTlock_operation.LOCK_UN"><span class="constructor">LOCK_UN</span></span></code></td>
+
+</tr></table>
+
+
+
+<pre><span id="VALflock"><span class="keyword">val</span> flock</span> : <code class="type">?nonblocking:bool -> Unix.file_descr -> <a href="Flock.html#TYPElock_operation">lock_operation</a> -> unit</code></pre><div class="info ">
+<code class="code">flock ~nonblocking fd operation</code> applies or removes an advisory lock on
+    the open file specified by <code class="code">fd</code>. The argument <code class="code">operation</code> is one of the
+    following:<ul>
+<li><code class="code">LOCK_SH</code>: Place a shared lock. More than one process may hold a shared
+                  lock for a given file at a given time.</li>
+</ul>
+<ul>
+<li><code class="code">LOCK_EX</code>: Place an exclusive lock. Only one process may hold an
+                 exclusive lock for a given file at a given time.</li>
+</ul>
+<ul>
+<li><code class="code">LOCK_UN</code>: Remove an existing lock held by this process.</li>
+</ul>
+
+    If <code class="code">nonblocking</code> is <code class="code">false</code> (default), a call to <code class="code">flock</code> may block if an
+    incompatible lock is held by another process. Otherwise, if <code class="code">nonblocking</code>
+    is <code class="code">true</code> then attempting to acquire a lock that is already held will
+    raises <code class="code">(Unix_error(EAGAIN,_,_)</code> or <code class="code">Unix_error(EWOULDBLOCK,_,_)</code>.
+<p>
+
+    A single file may not simultaneously have both shared and exclusive locks.
+<p>
+
+    Locks created by <code class="code">flock</code> are associated with an open file table entry. This
+    means that duplicate file descriptors (created by, for example, <code class="code">fork(2)</code>
+    or <code class="code">dup(2)</code>) refer to the same lock, and this lock may be modified or
+    released using any of these descriptors. Furthermore, the lock is released
+    either by an explicit <code class="code">LOCK_UN</code> operation on any of these duplicate
+    descriptors, or when all such descriptors have been closed.
+<p>
+
+    If a process uses <code class="code">open(2)</code> (or similar) to obtain more than one descriptor
+    for the same file, these descriptors are treated independently by <code class="code">flock</code>.
+    An attempt to lock the file using one of these file descriptors may be
+    denied by a lock that the calling process has already placed via another
+    descriptor.
+<p>
+
+    A process may hold only one type of lock (shared or exclusive) on a file.
+    Subsequent <code class="code">flock</code> calls on an already locked file will convert an existing
+    lock to the new lock mode.
+<p>
+
+    Locks created by <code class="code">flock</code> are preserved across an <code class="code">execve(2)</code>.
+<p>
+
+    A shared or exclusive lock can be placed on a file regardless of the mode
+    in which the file was opened.<br>
+</div>
+<br>
+<h1 id="1_Errors">Errors</h1>
+<p>
+
+    A call to <code class="code">flock</code> could raise one of the following Unix.Unix_errors:<ul>
+<li><code class="code">EBADF</code>: fd is not an open file descriptor.</li>
+<li><code class="code">EINTR</code>: While waiting to acquire a lock, the call was interrupted by
+                delivery of a signal caught by a handler; see signal(7).</li>
+<li><code class="code">ENOLCK</code>:The kernel ran out of memory for allocating lock records.</li>
+<li><code class="code">EWOULDBLOCK</code> or <code class="code">EAGAIN</code>:
+                The file is locked and the <code class="code">nonblocking</code> was <code class="code">true</code>.</li>
+</ul>
+<br>
+</body></html>
