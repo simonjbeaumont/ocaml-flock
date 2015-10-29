@@ -6,7 +6,7 @@ module Types (F: Cstubs.Types.TYPE) = struct
     let lock_shared = constant "LOCK_SH" int
     let lock_exclusive = constant "LOCK_EX" int
     let lock_unlock = constant "LOCK_UN" int
-    let lock_nb = constant "LOCK_NB" int
+    let lock_nonblocking = constant "LOCK_NB" int
   end
 end
 
