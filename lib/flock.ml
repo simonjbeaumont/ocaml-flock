@@ -1,6 +1,4 @@
-open Ctypes
-
-module B = Ffi_bindings.Bindings(Ffi_generated)
+module B = Ffi_bindings.Foreign_bindings
 module T = Ffi_bindings.Types(Ffi_generated_types)
 
 type lock_operation = LOCK_SH | LOCK_EX | LOCK_UN

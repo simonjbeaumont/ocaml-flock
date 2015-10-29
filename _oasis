@@ -16,7 +16,7 @@ Library flock
   CCOpt:            -I $pkg_ctypes_stubs
   ByteOpt:          -warn-error +1..45
   NativeOpt:        -warn-error +1..45
-  BuildDepends:     flock_bindings, ctypes.stubs
+  BuildDepends:     flock_bindings
 
 Library flock_bindings
   Install:          true
@@ -24,7 +24,7 @@ Library flock_bindings
   Modules:          Ffi_bindings
   ByteOpt:          -warn-error +1..45
   NativeOpt:        -warn-error +1..45
-  BuildDepends:     ctypes.stubs
+  BuildDepends:     ctypes.stubs, ctypes.foreign
 
 Executable ffi_stubgen
   Install:        false

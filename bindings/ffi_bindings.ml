@@ -14,3 +14,8 @@ module Bindings (F : Cstubs.FOREIGN) = struct
   open F
   let flock = foreign "flock" (int @-> int @-> returning int)
 end
+
+module Foreign_bindings = struct
+  open Foreign
+  let flock = foreign "flock" ~check_errno:true (int @-> int @-> returning int)
+end
