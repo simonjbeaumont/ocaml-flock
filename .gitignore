@@ -12,6 +12,7 @@ setup.log
 _build/
 *.native
 *.byte
+*.docdir
 
 travis-coveralls.sh
 .coverage/

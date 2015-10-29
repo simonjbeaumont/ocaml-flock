@@ -3,6 +3,7 @@ ocaml-pci
 
 [![Build Status](https://travis-ci.org/simonjbeaumont/ocaml-flock.svg?branch=master)](https://travis-ci.org/simonjbeaumont/ocaml-flock)
 [![Coverage Status](https://coveralls.io/repos/simonjbeaumont/ocaml-flock/badge.svg?branch=master)](https://coveralls.io/r/simonjbeaumont/ocaml-flock?branch=master)
+[![API reference](https://img.shields.io/badge/docs-API_reference-blue.svg)](http://simonjbeaumont.github.io/ocaml-flock/Flock.html)
 
 Some type-safe C bindings to `flock(2)` and a simple OCaml wrapper function.
 
@@ -16,3 +17,19 @@ without, right?
     ./configure [--enable-tests]
     make
     make install
+
+## Usage
+
+There's only one function exposed by this library:
+
+```ocaml
+val flock : ?nonblocking:bool -> Unix.file_descr -> lock_operation -> unit
+```
+
+Go nuts!
+
+## Documentation
+
+The API documentation for this library is automatically generated from source
+using `ocamldoc` and is available
+[online](http://simonjbeaumont.github.io/ocaml-flock/Flock.html).

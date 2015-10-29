@@ -26,6 +26,13 @@ Library flock_bindings
   NativeOpt:        -warn-error +1..45
   BuildDepends:     ctypes.stubs, ctypes.foreign
 
+Document flock
+  Type:                 ocamlbuild (0.4)
+  BuildTools:           ocamldoc
+  Title:                API reference for Flock
+  XOCamlBuildPath:      .
+  XOCamlBuildLibraries: flock
+
 Executable ffi_stubgen
   Install:        false
   Path:           stubgen
