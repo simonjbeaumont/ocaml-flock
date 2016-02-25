@@ -1,5 +1,5 @@
-ocaml-pci
-=========
+ocaml-flock
+===========
 
 [![Build Status](https://travis-ci.org/simonjbeaumont/ocaml-flock.svg?branch=master)](https://travis-ci.org/simonjbeaumont/ocaml-flock)
 [![Coverage Status](https://coveralls.io/repos/simonjbeaumont/ocaml-flock/badge.svg?branch=master)](https://coveralls.io/r/simonjbeaumont/ocaml-flock?branch=master)
