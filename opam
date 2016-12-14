@@ -25,4 +25,4 @@ depends: [
   "oasis" {build}
   "ounit" {test}
 ]
-available: [ocaml-version >= "4.01.0" & os = "linux"]
+available: [ocaml-version >= "4.01.0" & (os = "linux" | os = "darwin")]
